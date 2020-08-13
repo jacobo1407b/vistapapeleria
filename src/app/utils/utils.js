@@ -1,4 +1,4 @@
-export const host = "http://localhost:8080/";
+export const host = "https://resolute-return-272120.uk.r.appspot.com/";
 
 export function validateEmail(email) {
   // eslint-disable-next-line no-useless-escape
