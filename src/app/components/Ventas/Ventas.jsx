@@ -28,10 +28,12 @@ const Ventas = (props) => {
     fetch(`${host}ventas/index/${page}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        console.log(result);
         setdata(result.data);
         setTotalPages(result.paginas);
       })
       .catch((error) => {
+        console.log(error);
         enqueueSnackbar("Error en la conexión", { variant: "error" });
       });
   }, [page]);

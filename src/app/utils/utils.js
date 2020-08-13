@@ -1,4 +1,4 @@
-export const host = "http://localhost:9090/papeleria-dani/public/";
+export const host = "http://localhost:8080/";
 
 export function validateEmail(email) {
   // eslint-disable-next-line no-useless-escape
@@ -16,3 +16,5 @@ export function IsNumeric(input) {
 }
 //http://localhost:9090/papeleria-dani/public/
 //https://papeleria-arcoiris.000webhostapp.com/public/
+//https://resolute-return-272120.uk.r.appspot.com/
+//

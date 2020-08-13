@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
+import Button from "@material-ui/core/Button";
 
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Icon from "@material-ui/core/Icon";
@@ -215,15 +216,43 @@ const MenuBarr = (props) => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-            onClick={menuleft}
-          >
-            <MenuIcon />
-          </IconButton>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+              onClick={menuleft}
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
+          <div className={classes.sectionDesktop}>
+            <Button
+              color="inherit"
+              onClick={() => props.history.push("/ventas")}
+            >
+              Ventas
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => props.history.push("/productos")}
+            >
+              Productos
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => props.history.push("/monografias")}
+            >
+              Monografias
+            </Button>
+            <Button
+              color="inherit"
+              onClick={() => props.history.push("/biografias")}
+            >
+              Biografias
+            </Button>
+          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton

@@ -53,7 +53,7 @@ const NewVenta = () => {
       ...tempData,
       id: value.id,
       pro: value.nombre,
-      precio: value.precio,
+      precio: parseInt(value.precio, 10),
       ca: parseInt(value.cantidad, 10),
     });
     console.log(value);
@@ -70,7 +70,7 @@ const NewVenta = () => {
       seterr(false);
       setTempData({
         ...tempData,
-        cantidad: value,
+        cantidad: parseInt(value, 10),
       });
     }
   };
@@ -100,14 +100,13 @@ const NewVenta = () => {
       enqueueSnackbar("Llene la tabla", { variant: "error" });
     } else {
       setload(true);
-      var f = Date.now();
-      var n = new Date(f);
+      var n = new Date().toISOString().slice(0, 19).replace("T", " ");
       var obje = {
         data: dataTabla,
         fecha: n,
         folio: uuidv4(),
       };
-
+      console.log(obje);
       var myHeaders = new Headers();
       myHeaders.append(
         "Authorization",
@@ -118,7 +117,7 @@ const NewVenta = () => {
       var raw = JSON.stringify(obje);
 
       var requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
@@ -136,6 +135,7 @@ const NewVenta = () => {
           }
         })
         .catch((error) => {
+          console.log(error);
           setload(false);
           enqueueSnackbar("Error en la conexión", { variant: "error" });
         });

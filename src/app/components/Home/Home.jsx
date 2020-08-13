@@ -10,6 +10,9 @@ import {
 import { Link } from "react-router-dom";
 
 const Home = () => {
+  const redirectOpen = (url) => {
+    window.open(url, "_blank");
+  };
   return (
     <>
       <br />
@@ -21,7 +24,16 @@ const Home = () => {
               <br />
               <br />
               <br />
-              <Icon size="big" link name="facebook" />
+              <Icon
+                size="big"
+                link
+                name="facebook"
+                onClick={() =>
+                  redirectOpen(
+                    "https://www.facebook.com/Papeler%C3%ADa-Arcoiris-100546968391855/?modal=admin_todo_tour"
+                  )
+                }
+              />
               <br />
               <br />
               <br />
@@ -31,22 +43,48 @@ const Home = () => {
               <br />
               <br />
               <br />
-              <Icon size="big" link name="whatsapp" />
+              <Icon
+                size="big"
+                link
+                name="whatsapp"
+                onClick={() => redirectOpen("https://wa.link/qcj9xs")}
+              />
               <br />
               <br />
               <br />
               <br />
-              <Icon size="big" link name="mail" />
+              <Icon
+                size="big"
+                link
+                onClick={() => redirectOpen("mailto:parcoiris793@gmail.com")}
+                name="mail"
+              />
               <br />
               <br />
               <br />
               <br />
-              <Icon size="big" link name="twitter" />
+              <Icon
+                size="big"
+                link
+                name="twitter"
+                onClick={() =>
+                  redirectOpen("https://twitter.com/PapeleraArcoir1")
+                }
+              />
               <br />
               <br />
               <br />
               <br />
-              <Icon size="big" link name="map marker alternate" />
+              <Icon
+                onClick={() =>
+                  redirectOpen(
+                    "https://www.google.com/maps/place/19%C2%B023'53.0%22N+98%C2%B002'04.3%22W/@19.3980648,-98.036704,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x0!8m2!3d19.3980648!4d-98.0345153?hl=es"
+                  )
+                }
+                size="big"
+                link
+                name="map marker alternate"
+              />
               <br />
             </Grid.Column>
           </Grid>

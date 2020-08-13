@@ -43,7 +43,7 @@ const NewProduct = ({ setShow, setChildren, setNumero }) => {
       var raw = JSON.stringify(formData);
 
       var requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
@@ -66,6 +66,7 @@ const NewProduct = ({ setShow, setChildren, setNumero }) => {
           }
         })
         .catch((error) => {
+          console.log(error);
           setloadin(false);
           enqueueSnackbar("Error en la solicitud", { variant: "error" });
         });

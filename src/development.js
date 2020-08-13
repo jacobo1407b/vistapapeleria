@@ -25,3 +25,7 @@ app.listen(app.get("port"), () => {
   console.log("listen on port", app.get("port"));
   console.log(`open browser on http://localhost:${app.get("port")}`);
 });
+//instancia: papeleria-arcoiris
+//password: papeleria-arcoiris
+
+//pass: papeleria-arcoiris

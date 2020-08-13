@@ -68,7 +68,7 @@ const Registro = (props) => {
       var raw = JSON.stringify(formD);
 
       var requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: raw,
         redirect: "follow",

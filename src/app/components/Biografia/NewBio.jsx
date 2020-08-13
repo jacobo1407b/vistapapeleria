@@ -40,7 +40,7 @@ const NewBio = ({ setShow }) => {
       var raw = JSON.stringify({ nombre: formData.nombre });
 
       var requestOptions = {
-        method: "POST",
+        method: "PUT",
         headers: myHeaders,
         body: raw,
         redirect: "follow",

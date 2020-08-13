@@ -1,6 +1,7 @@
 import React from "react";
 import { Sidebar, Icon, Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import "../../assets/style/menu.css";
 
 const MenuLeft = (props) => {
   const { visible, setVisible, setuser } = props;
@@ -19,6 +20,7 @@ const MenuLeft = (props) => {
         vertical
         visible={visible}
         width="thin"
+        inverted
       >
         <Menu.Item as={Link} to="/" onClick={() => setVisible(false)}>
           <Icon name="home" />
@@ -43,11 +45,6 @@ const MenuLeft = (props) => {
         <Menu.Item as={Link} to="/ventas" onClick={() => setVisible(false)}>
           <Icon name="cart" />
           Ventas
-        </Menu.Item>
-
-        <Menu.Item onClick={logout}>
-          <Icon name="sign-in" />
-          Cerrar
         </Menu.Item>
       </Sidebar>
     </div>
