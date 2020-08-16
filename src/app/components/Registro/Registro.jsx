@@ -37,6 +37,10 @@ const Registro = (props) => {
       setErr({
         name: true,
       });
+    } else if (!formD.apellidom || !formD.apellidom || !formD.direccion) {
+      setErr({
+        all: true,
+      });
     } else if (!formD.username) {
       setErr({
         username: true,
@@ -117,12 +121,14 @@ const Registro = (props) => {
                 iconPosition="left"
                 placeholder="Apellido paterno"
                 name="apellidop"
+                error={err.all}
               />
               <Form.Input
                 fluid
                 iconPosition="left"
                 placeholder="Apellido Materno"
                 name="apellidom"
+                error={err.all}
               />
               <Form.Input
                 fluid
@@ -162,12 +168,14 @@ const Registro = (props) => {
                 iconPosition="left"
                 placeholder="Dirección"
                 name="direccion"
+                error={err.all}
               />
               <Form.Input
                 fluid
                 iconPosition="left"
                 placeholder="Teléfono"
                 name="telefono"
+                error={err.all}
               />
 
               <Button color="teal" fluid size="large" loading={loading}>

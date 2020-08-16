@@ -3,7 +3,7 @@ import { host } from "../../utils/utils";
 import { useSnackbar } from "notistack";
 import Tabla from "./CardMono";
 import Vacio from "../Vacio";
-import { Container, Pagination, Form, Dropdown } from "semantic-ui-react";
+import { Container, Form, Pagination, Dropdown, Grid } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateMonografia } from "../../actions/actionMonografia";
 
@@ -96,41 +96,59 @@ const Monografia = (props) => {
       <br />
       {data.length > 0 ? (
         <Container>
-          <Form.Field required>
-            <label>Buscar Monografia</label>
-            <Dropdown
-              fluid
-              selection
-              multiple={false}
-              search={estadoo.search}
-              options={estadoo.options}
-              value={estadoo.value}
-              placeholder="Buscar Monografia"
-              onChange={handleChange}
-              onSearchChange={handleSearchChange}
-              disabled={estadoo.isFetching}
-              loading={estadoo.isFetching}
-            />
-          </Form.Field>
-          <Tabla
-            data={data}
-            setShow={setShow}
-            setTitle={setTitle}
-            setChildren={setChildren}
-            setEnvi={setEnvi}
-            setimg={setimg}
-            setPage={setPage}
-          />
-          <Pagination
-            activePage={page}
-            boundaryRange={1}
-            ellipsisItem={null}
-            firstItem={null}
-            lastItem={null}
-            siblingRange={1}
-            totalPages={totalPages}
-            onPageChange={handlePaginationChange}
-          />
+          <Grid stackable centered>
+            <br />
+            <Grid.Row columns={1}>
+              <Grid.Column width={6}>
+                <Form.Field required>
+                  <label>Buscar Monografia</label>
+                  <Dropdown
+                    fluid
+                    selection
+                    icon="search"
+                    multiple={false}
+                    search={estadoo.search}
+                    options={estadoo.options}
+                    value={estadoo.value}
+                    placeholder="Buscar Monografia"
+                    onChange={handleChange}
+                    onSearchChange={handleSearchChange}
+                    disabled={estadoo.isFetching}
+                    loading={estadoo.isFetching}
+                  />
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={1}>
+              <Grid.Column width={9}>
+                <Tabla
+                  data={data}
+                  setShow={setShow}
+                  setTitle={setTitle}
+                  setChildren={setChildren}
+                  setEnvi={setEnvi}
+                  setimg={setimg}
+                  setPage={setPage}
+                />
+              </Grid.Column>
+            </Grid.Row>
+
+            <br />
+            <Grid.Row columns={1}>
+              <Grid.Column width={10}>
+                <Pagination
+                  activePage={page}
+                  boundaryRange={1}
+                  ellipsisItem={null}
+                  firstItem={null}
+                  lastItem={null}
+                  siblingRange={1}
+                  totalPages={totalPages}
+                  onPageChange={handlePaginationChange}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Container>
       ) : (
         <Vacio />

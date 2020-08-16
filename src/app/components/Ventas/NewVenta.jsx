@@ -7,12 +7,15 @@ import {
   Table,
   Dimmer,
   Loader,
+  Checkbox,
+  Icon,
+  Grid,
 } from "semantic-ui-react";
 import { host } from "../../utils/utils";
 import { v4 as uuidv4 } from "uuid";
 import { useSnackbar } from "notistack";
 
-const NewVenta = () => {
+const NewVenta = ({ setReLoad }) => {
   const [datos, setdatos] = useState([]);
   const [tempData, setTempData] = useState({});
   const [genderOptions, setgenderOptions] = useState([]);
@@ -20,6 +23,7 @@ const NewVenta = () => {
   const [err, seterr] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [load, setload] = useState(false);
+  const [i, seti] = useState(false);
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append(
@@ -84,7 +88,9 @@ const NewVenta = () => {
         IVA = 0,
         Tota = 0;
       subtotal = parseInt(tempData.cantidad, 10) * parseInt(tempData.precio);
-      IVA = (subtotal * 16) / 100;
+      if (i) {
+        IVA = (subtotal * 16) / 100;
+      }
       Tota = subtotal + IVA;
       tempData.iva = IVA;
       (tempData.sub = subtotal), (tempData.total = Tota);
@@ -141,85 +147,110 @@ const NewVenta = () => {
         });
     }
   };
+
+  const eliminaDe = (i) => {
+    dataTabla.splice(i, 1);
+    setReLoad((prev) => !prev);
+  };
   return (
     <div>
       <Dimmer active={load}>
         <Loader size="massive">Enviando...</Loader>
       </Dimmer>
-      <Segment color="black">
-        <Form>
-          <Form.Group widths="equal">
-            <Form.Select
-              fluid
-              name="pro"
-              label="Producto"
-              placeholder="Producto"
-              options={genderOptions}
-              onChange={changeOption}
-            />
+      <Grid stackable>
+        <Grid.Row />
+        <Grid.Row>
+          <Grid.Column width={3} />
+          <Grid.Column width={10}>
+            <Segment color="black">
+              <Form>
+                <Form.Group widths="equal">
+                  <Form.Select
+                    fluid
+                    name="pro"
+                    label="Producto"
+                    placeholder="Producto"
+                    options={genderOptions}
+                    onChange={changeOption}
+                  />
+                  <Form.Field
+                    id="form-input-control-first-name"
+                    control={Input}
+                    label="Precio"
+                    placeholder="Precio"
+                    defaultValue={tempData.precio}
+                    name="precio"
+                  />
+                  <Form.Field
+                    id="form-input-control-last-name"
+                    control={Input}
+                    label="Cantidad"
+                    placeholder="Cantidad"
+                    onChange={cambio}
+                    defaultValue={tempData.cantidad}
+                    value={tempData.cantidad}
+                    name="cantidad"
+                    error={err}
+                  />
+                  <Form.Field
+                    control={Checkbox}
+                    onClick={() => seti(!i)}
+                    label={{ children: "Iva (16%)" }}
+                  />
+                </Form.Group>
+
+                <Form.Field
+                  id="form-button-control-public"
+                  control={Button}
+                  onClick={ad}
+                  content="Agregar Producto"
+                />
+              </Form>
+            </Segment>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={3} />
+          <Grid.Column width={10}>
+            <Table celled>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell>Producto</Table.HeaderCell>
+                  <Table.HeaderCell>Cantidad a vender</Table.HeaderCell>
+                  <Table.HeaderCell>iva</Table.HeaderCell>
+                  <Table.HeaderCell>Sub Total</Table.HeaderCell>
+                  <Table.HeaderCell>Total</Table.HeaderCell>
+                  <Table.HeaderCell>Acciones</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+
+              <Table.Body>
+                {dataTabla.map((poste, i) => {
+                  return (
+                    <Table.Row key={i}>
+                      <Table.Cell>{poste.pro}</Table.Cell>
+                      <Table.Cell>{poste.cantidad}</Table.Cell>
+                      <Table.Cell>{poste.iva}</Table.Cell>
+                      <Table.Cell>{poste.sub}</Table.Cell>
+                      <Table.Cell>{poste.total}</Table.Cell>
+                      <Table.Cell negative onClick={() => eliminaDe(i)}>
+                        <Icon name="x" size="large" link />
+                      </Table.Cell>
+                    </Table.Row>
+                  );
+                })}
+              </Table.Body>
+            </Table>
+
             <Form.Field
-              id="form-input-control-first-name"
-              control={Input}
-              label="Precio"
-              placeholder="Precio"
-              defaultValue={tempData.precio}
-              name="precio"
+              id="form-button-control-public"
+              control={Button}
+              onClick={Enviar}
+              content="Enviar Info"
             />
-            <Form.Field
-              id="form-input-control-last-name"
-              control={Input}
-              label="Cantidad"
-              placeholder="Cantidad"
-              onChange={cambio}
-              defaultValue={tempData.cantidad}
-              value={tempData.cantidad}
-              name="cantidad"
-              error={err}
-            />
-          </Form.Group>
-
-          <Form.Field
-            id="form-button-control-public"
-            control={Button}
-            onClick={ad}
-            content="Agregar Producto"
-          />
-        </Form>
-      </Segment>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Producto</Table.HeaderCell>
-            <Table.HeaderCell>Cantidad a vender</Table.HeaderCell>
-            <Table.HeaderCell>iva</Table.HeaderCell>
-            <Table.HeaderCell>Sub Total</Table.HeaderCell>
-            <Table.HeaderCell>Total</Table.HeaderCell>
-            <Table.HeaderCell>Acciones</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-
-        <Table.Body>
-          {dataTabla.map((poste, i) => {
-            return (
-              <Table.Row key={i}>
-                <Table.Cell>{poste.pro}</Table.Cell>
-                <Table.Cell>{poste.cantidad}</Table.Cell>
-                <Table.Cell>{poste.iva}</Table.Cell>
-                <Table.Cell>{poste.sub}</Table.Cell>
-                <Table.Cell>{poste.total}</Table.Cell>
-                <Table.Cell negative>X</Table.Cell>
-              </Table.Row>
-            );
-          })}
-        </Table.Body>
-      </Table>
-
-      <Form.Field
-        id="form-button-control-public"
-        control={Button}
-        onClick={Enviar}
-        content="Enviar Info"
-      />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </div>
   );
 };

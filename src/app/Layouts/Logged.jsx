@@ -5,7 +5,7 @@ import Rout from "../routes/Routes";
 import Menu from "../components/Menu/Menu";
 import MenuLeft from "../components/Menu/MenuLeft";
 import Modal from "../components/Modal/ModalBasic";
-const Logged = ({ setuser }) => {
+const Logged = ({ setuser, setReLoad }) => {
   const [visible, setVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState("");
@@ -29,6 +29,7 @@ const Logged = ({ setuser }) => {
             setimg={setimg}
           />
           <Rout
+            setReLoad={setReLoad}
             setShow={setShow}
             setTitle={setTitle}
             setChildren={setChildren}

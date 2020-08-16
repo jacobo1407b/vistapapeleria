@@ -4,7 +4,7 @@ import { host } from "../../utils/utils";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateMonografia } from "../../actions/actionMonografia";
-
+import { validacel } from "../../utils/utils";
 const EditaMono = (props) => {
   const { setPage, data, setShow } = props;
   const [formdata, setdata] = useState(data);
@@ -23,11 +23,14 @@ const EditaMono = (props) => {
   };
 
   const enviar = () => {
-    if (!formdata.nombre) {
+    if (!formdata.nombre || !formdata.codigo) {
       setError({
         content: "Complete el campo",
         pointing: "below",
       });
+    } else if (!validacel(formdata.codigo)) {
+      setError(false);
+      enqueueSnackbar("Ingresa un codigo correcto", { variant: "error" });
     } else {
       setError(false);
       setloading(true);
@@ -38,7 +41,10 @@ const EditaMono = (props) => {
       );
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({ nombre: formdata.nombre });
+      var raw = JSON.stringify({
+        nombre: formdata.nombre,
+        codigo: formdata.codigo,
+      });
 
       var requestOptions = {
         method: "PUT",
@@ -54,7 +60,11 @@ const EditaMono = (props) => {
         .then((response) => response.json())
         .then((result) => {
           setloading(false);
-          if (!result.error) {
+          if (result.warn) {
+            dispatch(updateMonografia(num));
+            enqueueSnackbar(result.message, { variant: "warning" });
+            setShow(false);
+          } else if (!result.error) {
             dispatch(updateMonografia(num));
             enqueueSnackbar(result.message, { variant: "success" });
             setShow(false);
@@ -79,6 +89,15 @@ const EditaMono = (props) => {
           placeholder="Nombre monografia"
           name="nombre"
           defaultValue={data.nombre}
+          error={error}
+        />
+        <Form.Field
+          id="form-input-control-error-email"
+          control={Input}
+          label="Codigo monografia"
+          placeholder="Codigo monografia"
+          name="codigo"
+          defaultValue={data.codigo}
           error={error}
         />
       </Form.Group>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { host } from "../../utils/utils";
 import { useSnackbar } from "notistack";
-import { Container, Pagination, Form, Dropdown } from "semantic-ui-react";
+import { Container, Pagination, Form, Dropdown, Grid } from "semantic-ui-react";
 import TablaBio from "./TablaBio";
 import Vacio from "../Vacio";
 import { useSelector, useDispatch } from "react-redux";
@@ -99,41 +99,58 @@ const Biografia = (props) => {
 
       {data.length > 0 ? (
         <Container>
-          <Form.Field required>
-            <label>Buscar Biografia</label>
-            <Dropdown
-              fluid
-              selection
-              multiple={false}
-              search={estadoo.search}
-              options={estadoo.options}
-              value={estadoo.value}
-              placeholder="Buscar Biografia"
-              onChange={handleChange}
-              onSearchChange={handleSearchChange}
-              disabled={estadoo.isFetching}
-              loading={estadoo.isFetching}
-            />
-          </Form.Field>
-          <TablaBio
-            data={data}
-            setpage={setpage}
-            setShow={setShow}
-            setTitle={setTitle}
-            setChildren={setChildren}
-            setEnvi={setEnvi}
-            setimg={setimg}
-          />
-          <Pagination
-            activePage={page}
-            boundaryRange={1}
-            ellipsisItem={null}
-            firstItem={null}
-            lastItem={null}
-            siblingRange={1}
-            totalPages={totalPages}
-            onPageChange={handlePaginationChange}
-          />
+          <Grid stackable centered>
+            <br />
+            <Grid.Row columns={1}>
+              <Grid.Column width={6}>
+                <Form.Field required>
+                  <label>Buscar Biografia</label>
+                  <Dropdown
+                    fluid
+                    selection
+                    icon="search"
+                    multiple={false}
+                    search={estadoo.search}
+                    options={estadoo.options}
+                    value={estadoo.value}
+                    placeholder="Buscar Biografia"
+                    onChange={handleChange}
+                    onSearchChange={handleSearchChange}
+                    disabled={estadoo.isFetching}
+                    loading={estadoo.isFetching}
+                  />
+                </Form.Field>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row columns={1}>
+              <Grid.Column width={9}>
+                <TablaBio
+                  data={data}
+                  setpage={setpage}
+                  setShow={setShow}
+                  setTitle={setTitle}
+                  setChildren={setChildren}
+                  setEnvi={setEnvi}
+                  setimg={setimg}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row columns={1}>
+              <Grid.Column width={6}>
+                <Pagination
+                  activePage={page}
+                  boundaryRange={1}
+                  ellipsisItem={null}
+                  firstItem={null}
+                  lastItem={null}
+                  siblingRange={1}
+                  totalPages={totalPages}
+                  onPageChange={handlePaginationChange}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Container>
       ) : (
         <Vacio />

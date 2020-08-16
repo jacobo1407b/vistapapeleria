@@ -9,7 +9,8 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Icon } from "semantic-ui-react";
 import Detalles from "./Detalles";
-
+import { number_format } from "../../utils/utils";
+import { Popup } from "semantic-ui-react";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: "#454545",
@@ -41,7 +42,7 @@ const TablaVentas = (props) => {
   const classes = useStyles();
 
   const detalles = (datosventa) => {
-    setTitle(`Detalles de venta folio ${datosventa.folio}`);
+    setTitle(`Venta folio:  ${datosventa.folio}`);
     setChildren(<Detalles data={datosventa} />);
     setimg(null);
     setShow(true);
@@ -64,13 +65,21 @@ const TablaVentas = (props) => {
                 {row.folio}
               </StyledTableCell>
               <StyledTableCell align="lefth">{row.fecha}</StyledTableCell>
-              <StyledTableCell align="lefth">{row.total}</StyledTableCell>
               <StyledTableCell align="lefth">
-                <Icon
-                  name="eye"
-                  size="big"
-                  link
-                  onClick={() => detalles(row)}
+                ${number_format(row.total, 2)}
+              </StyledTableCell>
+              <StyledTableCell align="lefth">
+                <Popup
+                  trigger={
+                    <Icon
+                      name="eye"
+                      size="big"
+                      link
+                      onClick={() => detalles(row)}
+                    />
+                  }
+                  content="Ver detalles"
+                  inverted
                 />
               </StyledTableCell>
             </StyledTableRow>

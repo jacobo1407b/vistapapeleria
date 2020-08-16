@@ -13,7 +13,7 @@ const App = () => {
     <Provider store={store}>
       <SnackbarProvider>
         {user ? (
-          <Layout setuser={setuser} />
+          <Layout setuser={setuser} setReLoad={setReLoad} />
         ) : (
           <Nouser setuser={setuser} setReLoad={setReLoad} />
         )}

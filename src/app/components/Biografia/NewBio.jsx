@@ -4,6 +4,7 @@ import { host } from "../../utils/utils";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBio } from "../../actions/actionBio";
+import { validacel } from "../../utils/utils";
 
 const NewBio = ({ setShow }) => {
   const [formData, setFormData] = useState({});
@@ -22,11 +23,14 @@ const NewBio = ({ setShow }) => {
   };
 
   const enviar = () => {
-    if (!formData.nombre) {
+    if (!formData.nombre || !formData.codigo) {
       setError({
         content: "Completa el campo",
         pointing: "below",
       });
+    } else if (!validacel(formData.codigo)) {
+      setError(false);
+      enqueueSnackbar("Ingrese un numero en el codigo", { variant: "error" });
     } else {
       setError(false);
       setloading(true);
@@ -37,7 +41,10 @@ const NewBio = ({ setShow }) => {
       );
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({ nombre: formData.nombre });
+      var raw = JSON.stringify({
+        nombre: formData.nombre,
+        codigo: parseInt(formData.codigo, 10),
+      });
 
       var requestOptions = {
         method: "PUT",
@@ -74,6 +81,14 @@ const NewBio = ({ setShow }) => {
           placeholder="Nombre biografia"
           error={error}
           name="nombre"
+        />
+        <Form.Field
+          id="form-input-control-error-email"
+          control={Input}
+          label="Codigo Biografia"
+          placeholder="Codigo biografia"
+          error={error}
+          name="codigo"
         />
       </Form.Group>
       <Button primary fluid loading={loading}>

@@ -11,9 +11,9 @@ import { red } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Icon, Grid } from "semantic-ui-react";
+import { Icon, Grid, Popup } from "semantic-ui-react";
 import Swal from "sweetalert2";
-import { host } from "../../utils/utils";
+import { host, number_format } from "../../utils/utils";
 import { useSnackbar } from "notistack";
 import Edita from "./Edit";
 import { useDispatch, useSelector } from "react-redux";
@@ -130,9 +130,16 @@ const Carta = ({
             <Card className={classes.root}>
               <CardHeader
                 avatar={
-                  <Avatar aria-label="recipe" className={classes.avatar}>
-                    {poste.cantidad}
-                  </Avatar>
+                  <Popup
+                    trigger={
+                      <Avatar aria-label="recipe" className={classes.avatar}>
+                        {poste.cantidad}
+                      </Avatar>
+                    }
+                    content={"Cantidad en stock " + poste.cantidad}
+                    style={{ opacity: 0.8 }}
+                    inverted
+                  />
                 }
                 /*action={
                   <IconButton aria-label="settings">
@@ -144,7 +151,7 @@ const Carta = ({
                   </IconButton>
                 }*/
                 title={poste.nombre}
-                subheader={`Pecio $${poste.precio}MXN`}
+                subheader={`Pecio $${number_format(poste.precio, 2)}MXN`}
               />
               <CardMedia
                 className={classes.media}

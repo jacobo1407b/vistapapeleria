@@ -102,7 +102,7 @@ const CardMono = (props) => {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>Item</StyledTableCell>
+            <StyledTableCell>Codigo</StyledTableCell>
             <StyledTableCell align="lefth">Nombre</StyledTableCell>
             <StyledTableCell align="center">Acciones</StyledTableCell>
           </TableRow>
@@ -111,7 +111,7 @@ const CardMono = (props) => {
           {data.map((row, id) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
-                {id + 1}
+                {row.codigo}
               </StyledTableCell>
               <StyledTableCell align="lefth">{row.nombre}</StyledTableCell>
               <StyledTableCell align="center">

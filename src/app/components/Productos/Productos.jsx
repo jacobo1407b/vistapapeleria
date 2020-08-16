@@ -97,63 +97,77 @@ const Productos = (props) => {
 
   return (
     <div>
-      {productos.length === 0 ? (
-        <Vacio
-          titulo="No existen registros"
-          accion="Agregar producto"
-          setShow={setShow}
-          setTitle={setTitle}
-          setChildren={setChildren}
-          setEnvi={setEnvi}
-          setimg={setimg}
-          setNumero={setNumero}
-        />
-      ) : (
-        <Fragment>
-          <Container>
-            <Form.Field required>
-              <label>Buscar Producto</label>
-              <Dropdown
-                fluid
-                selection
-                multiple={false}
-                search={estadoo.search}
-                options={estadoo.options}
-                value={estadoo.value}
-                placeholder="Buscar Producto"
-                onChange={handleChange}
-                onSearchChange={handleSearchChange}
-                disabled={estadoo.isFetching}
-                loading={estadoo.isFetching}
-              />
-            </Form.Field>
-            <Card
-              data={productos}
-              setNumero={setNumero}
-              numero={numero}
-              setChildren={setChildren}
-              setShow={setShow}
-              setTitle={setTitle}
-              setimg={setimg}
-            />
-          </Container>
+      <Container>
+        {productos.length === 0 ? (
+          <Vacio
+            titulo="No existen registros"
+            accion="Agregar producto"
+            setShow={setShow}
+            setTitle={setTitle}
+            setChildren={setChildren}
+            setEnvi={setEnvi}
+            setimg={setimg}
+            setNumero={setNumero}
+          />
+        ) : (
+          <Fragment>
+            <Grid stackable centered>
+              <br />
+              <Grid.Row columns={1}>
+                <Grid.Column width={6}>
+                  <br />
+                  <Form.Field required>
+                    <label>Buscar Producto</label>
+                    <Dropdown
+                      fluid
+                      selection
+                      multiple={false}
+                      icon="search"
+                      search={estadoo.search}
+                      options={estadoo.options}
+                      value={estadoo.value}
+                      placeholder="Buscar Producto"
+                      onChange={handleChange}
+                      onSearchChange={handleSearchChange}
+                      disabled={estadoo.isFetching}
+                      loading={estadoo.isFetching}
+                    />
+                  </Form.Field>
+                </Grid.Column>
+              </Grid.Row>
 
-          <Grid.Row columns={1}>
-            <Grid.Column width={6}>
-              <Pagination
-                activePage={numero}
-                boundaryRange={1}
-                ellipsisItem={null}
-                firstItem={null}
-                lastItem={null}
-                siblingRange={1}
-                totalPages={totalPages}
-                onPageChange={handlePaginationChange}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Fragment>
-      )}
+              <Grid.Row columns={1}>
+                <Grid.Column width={16}>
+                  <Card
+                    data={productos}
+                    setNumero={setNumero}
+                    numero={numero}
+                    setChildren={setChildren}
+                    setShow={setShow}
+                    setTitle={setTitle}
+                    setimg={setimg}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+
+              <Grid.Row columns={1}>
+                <Grid.Column width={6}>
+                  <Pagination
+                    activePage={numero}
+                    boundaryRange={1}
+                    ellipsisItem={null}
+                    firstItem={null}
+                    lastItem={null}
+                    siblingRange={1}
+                    totalPages={totalPages}
+                    onPageChange={handlePaginationChange}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </Fragment>
+        )}
+      </Container>
     </div>
   );
 };

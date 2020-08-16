@@ -3,6 +3,7 @@ const initialState = {
   numero: 0,
   monografia: 0,
   biografia: 0,
+  venta: 0,
 };
 
 function updateState(state = initialState, action) {
@@ -21,6 +22,11 @@ function updateState(state = initialState, action) {
       return {
         ...state,
         biografia: action.payload + 1,
+      };
+    case "VENTA":
+      return {
+        ...state,
+        venta: action.payload + 1,
       };
     default:
       return state;

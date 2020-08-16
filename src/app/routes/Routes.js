@@ -6,8 +6,9 @@ import Monografia from "../components/Monografia/Monografia";
 import Biografia from "../components/Biografia/Biografia";
 import Ventas from "../components/Ventas/Ventas";
 import NewVenta from "../components/Ventas/NewVenta";
+import SimplePdf from "../components/PDF/SimplePdf";
 const Routes = (props) => {
-  const { setShow, setTitle, setChildren, setEnvi, setimg } = props;
+  const { setShow, setTitle, setChildren, setEnvi, setimg, setReLoad } = props;
   return (
     <div>
       <Switch>
@@ -51,7 +52,10 @@ const Routes = (props) => {
           />
         </Route>
         <Route exact path="/new-ventas">
-          <NewVenta />
+          <NewVenta setReLoad={setReLoad} />
+        </Route>
+        <Route exact path="/verpdf">
+          <SimplePdf />
         </Route>
       </Switch>
     </div>

@@ -1,15 +1,14 @@
-const path = require('path');
+const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const LiveReloadPlugin = require('webpack-livereload-plugin');
-
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const LiveReloadPlugin = require("webpack-livereload-plugin");
 
 module.exports = {
-  mode: 'development',
-  devtool: 'cheap-eval-source-map',
+  mode: "development",
+  devtool: "cheap-eval-source-map",
   entry: "./src/app/index.js",
   output: {
-    path: path.resolve(__dirname, './src/public'),
+    path: path.resolve(__dirname, "./src/public"),
     // path: __dirname + "/src/public",
     filename: "bundle.js",
   },
@@ -22,8 +21,8 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
-        }
+          loader: "babel-loader",
+        },
       },
 
       {
@@ -32,9 +31,9 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
           },
-          'css-loader',
-          'sass-loader'
-        ]
+          "css-loader",
+          "sass-loader",
+        ],
       },
       {
         test: /\.(png|gif|jpg)$/,
@@ -51,7 +50,7 @@ module.exports = {
         test: /\.svg$/,
         use: [
           {
-            loader: 'svg-url-loader',
+            loader: "svg-url-loader",
             options: {
               limit: 10000,
             },
@@ -65,12 +64,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './src/public/index.html'
+      template: "./src/public/index.html",
     }),
 
     new MiniCssExtractPlugin({
-      filename: 'assets/style/[name].css',
+      filename: "assets/style/[name].css",
     }),
-    new LiveReloadPlugin()
+    new LiveReloadPlugin(),
   ],
 };

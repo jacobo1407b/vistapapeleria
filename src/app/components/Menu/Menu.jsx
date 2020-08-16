@@ -16,7 +16,9 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AddMono from "../Monografia/AddMono";
 import NewBio from "../Biografia/NewBio";
 import NewProduct from "../Productos/NewProduct";
-import NewVenta from "../Ventas/NewVenta";
+import HomeIcon from "@material-ui/icons/Home";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import { Grid, Popup, Icon as Ico } from "semantic-ui-react";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -228,30 +230,44 @@ const MenuBarr = (props) => {
             </IconButton>
           </div>
           <div className={classes.sectionDesktop}>
-            <Button
-              color="inherit"
-              onClick={() => props.history.push("/ventas")}
-            >
-              Ventas
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => props.history.push("/productos")}
-            >
-              Productos
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => props.history.push("/monografias")}
-            >
-              Monografias
-            </Button>
-            <Button
-              color="inherit"
-              onClick={() => props.history.push("/biografias")}
-            >
-              Biografias
-            </Button>
+            <Grid>
+              <Grid.Column width={6}>
+                <IconButton
+                  edge="end"
+                  aria-label="Home page"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={() => props.history.push("/")}
+                  color="inherit"
+                >
+                  <HomeIcon /> Inicio
+                </IconButton>
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <IconButton
+                  edge="end"
+                  aria-label="Home page"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={() => props.history.push("/ventas")}
+                  color="inherit"
+                >
+                  <Ico name="dollar sign" size="small" /> Ventas
+                </IconButton>
+              </Grid.Column>
+              <Grid.Column width={2}>
+                <IconButton
+                  edge="end"
+                  aria-label="Home page"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={() => props.history.push("/productos")}
+                  color="inherit"
+                >
+                  <AttachFileIcon /> Productos
+                </IconButton>
+              </Grid.Column>
+            </Grid>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -265,13 +281,21 @@ const MenuBarr = (props) => {
             >
               <Icon>add_circle</Icon>
             </IconButton>
-            <IconButton
-              aria-label="show 4 new mails"
-              color="inherit"
-              onClick={logout}
-            >
-              <ExitToAppIcon />
-            </IconButton>
+
+            <Popup
+              trigger={
+                <IconButton
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                  onClick={logout}
+                >
+                  <ExitToAppIcon />
+                </IconButton>
+              }
+              content="Cerrar sesión"
+              style={{ opacity: 0.8 }}
+              inverted
+            />
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

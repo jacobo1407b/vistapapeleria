@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "semantic-ui-react";
-import { host } from "../../utils/utils";
+import { host, validacel } from "../../utils/utils";
 import { useSnackbar } from "notistack";
 import { useDispatch, useSelector } from "react-redux";
 import { updateBio } from "../../actions/actionBio";
@@ -24,11 +24,13 @@ const Edita = (props) => {
   };
 
   const enviar = () => {
-    if (!formData.nombre) {
+    if (!formData.nombre || !formData.codigo) {
       setError({
         content: "Complete el campo",
         pointing: "below",
       });
+    } else if (!validacel(formData.codigo)) {
+      enqueueSnackbar("Ingrese un codigó valido", { variant: "error" });
     } else {
       setError(false);
       setloading(true);
@@ -39,7 +41,10 @@ const Edita = (props) => {
       );
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({ nombre: formData.nombre });
+      var raw = JSON.stringify({
+        nombre: formData.nombre,
+        codigo: formData.codigo,
+      });
 
       var requestOptions = {
         method: "PUT",
@@ -55,7 +60,11 @@ const Edita = (props) => {
         .then((response) => response.json())
         .then((result) => {
           setloading(false);
-          if (!result.error) {
+          if (result.warn) {
+            dispatch(updateBio(num));
+            enqueueSnackbar(result.message, { variant: "warning" });
+            setShow(false);
+          } else if (!result.error) {
             dispatch(updateBio(num));
             enqueueSnackbar(result.message, { variant: "success" });
             setShow(false);
@@ -79,6 +88,15 @@ const Edita = (props) => {
           placeholder="Nombre monografia"
           name="nombre"
           defaultValue={data.nombre}
+          error={error}
+        />
+        <Form.Field
+          id="form-input-control-error-email"
+          control={Input}
+          label="Código monografia"
+          placeholder="Código monografia"
+          name="codigo"
+          defaultValue={data.codigo}
           error={error}
         />
       </Form.Group>

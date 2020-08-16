@@ -7,9 +7,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Avatar from "@material-ui/core/Avatar";
 import { useSnackbar } from "notistack";
-import { host } from "../../utils/utils";
-
+import CardHeader from "@material-ui/core/CardHeader";
+import { host, number_format } from "../../utils/utils";
+import { Popup, Icon } from "semantic-ui-react";
+import moment from "moment";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: "#454545",
@@ -27,6 +30,10 @@ const StyledTableRow = withStyles((theme) => ({
       backgroundColor: theme.palette.action.hover,
     },
   },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
 }))(TableRow);
 
 const useStyles = makeStyles({
@@ -40,6 +47,8 @@ const Detalles = ({ data }) => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const [datos, setdatos] = useState([]);
+  var f = new Date(Date.now());
+  const [tot, setTot] = useState(0);
   useEffect(() => {
     var myHeaders = new Headers();
     myHeaders.append(
@@ -57,40 +66,77 @@ const Detalles = ({ data }) => {
       .then((response) => response.json())
       .then((result) => {
         setdatos(result);
+        var suma = 0;
+        result.map((poste) => {
+          suma = suma + poste.total;
+        });
+        setTot(suma);
       })
       .catch((error) => {
         enqueueSnackbar("Error en la conexión", { variant: "error" });
       });
   }, []);
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Item</StyledTableCell>
-            <StyledTableCell align="lefth">Nombre</StyledTableCell>
-            <StyledTableCell align="center">Cantidad</StyledTableCell>
-            <StyledTableCell align="center">Iva</StyledTableCell>
-            <StyledTableCell align="center">Subtotal</StyledTableCell>
-            <StyledTableCell align="center">Total</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {datos.map((row, id) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
-                {id + 1}
-              </StyledTableCell>
-              <StyledTableCell align="lefth">{row.producto}</StyledTableCell>
-              <StyledTableCell align="center">{row.cantidad}</StyledTableCell>
-              <StyledTableCell align="center">$ {row.iva}</StyledTableCell>
-              <StyledTableCell align="center">$ {row.subtotal}</StyledTableCell>
-              <StyledTableCell align="center">$ {row.total}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div id="genera">
+      <CardHeader
+        avatar={
+          <Avatar
+            aria-label="recipe"
+            src="/img/logo.jpg"
+            className={classes.large}
+          />
+        }
+        title="Papeleria Arcoiris"
+        subheader={"Reporte de venta: " + moment().format()}
+      />
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Item</StyledTableCell>
+              <StyledTableCell align="lefth">Nombre</StyledTableCell>
+              <StyledTableCell align="center">Cantidad</StyledTableCell>
+              <StyledTableCell align="center">Iva</StyledTableCell>
+              <StyledTableCell align="center">Subtotal</StyledTableCell>
+              <StyledTableCell align="center">Total</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {datos.map((row, id) => (
+              <StyledTableRow key={row.id}>
+                <StyledTableCell component="th" scope="row">
+                  {id + 1}
+                </StyledTableCell>
+                <StyledTableCell align="lefth">{row.producto}</StyledTableCell>
+                <StyledTableCell align="center">{row.cantidad}</StyledTableCell>
+                <StyledTableCell align="center">
+                  $ {number_format(row.iva, 2)}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  $ {number_format(row.subtotal, 2)}
+                </StyledTableCell>
+                <StyledTableCell align="center">
+                  $ {number_format(row.total, 2)}
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+            <TableRow>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell align="right">$ {number_format(tot, 2)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <br />
+
+        <Icon
+          title="Generar reporte"
+          name="file alternate"
+          size="big"
+          link
+          onClick={() => window.print()}
+        />
+      </TableContainer>
+    </div>
   );
 };
 

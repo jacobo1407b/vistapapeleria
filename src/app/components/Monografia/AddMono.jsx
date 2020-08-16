@@ -4,6 +4,7 @@ import { host } from "../../utils/utils";
 import { useSnackbar } from "notistack";
 import { updateMonografia } from "../../actions/actionMonografia";
 import { useDispatch, useSelector } from "react-redux";
+import { validacel } from "../../utils/utils";
 
 const AddMono = ({ setShow }) => {
   const [formData, setFormData] = useState({});
@@ -22,11 +23,13 @@ const AddMono = ({ setShow }) => {
   };
 
   const enviar = () => {
-    if (!formData.nombre) {
+    if (!formData.nombre || !formData.codigo) {
       setError({
         content: "Completa el campo",
         pointing: "below",
       });
+    } else if (!validacel(formData.codigo)) {
+      enqueueSnackbar("Ingrese un Codigo valido", { variant: "error" });
     } else {
       setError(false);
       setloading(true);
@@ -37,7 +40,10 @@ const AddMono = ({ setShow }) => {
       );
       myHeaders.append("Content-Type", "application/json");
 
-      var raw = JSON.stringify({ nombre: formData.nombre });
+      var raw = JSON.stringify({
+        nombre: formData.nombre,
+        codigo: formData.codigo,
+      });
 
       var requestOptions = {
         method: "PUT",
@@ -74,6 +80,14 @@ const AddMono = ({ setShow }) => {
           placeholder="Nombre Monografia"
           error={error}
           name="nombre"
+        />
+        <Form.Field
+          id="form-input-control-error-email"
+          control={Input}
+          label="Codigo Monografia"
+          placeholder="Codigo Monografia"
+          error={error}
+          name="codigo"
         />
       </Form.Group>
       <Button primary fluid loading={loading}>
